@@ -1,0 +1,40 @@
+{
+  "name": "grommet",
+  "version": "0.6.12",
+  "main": "grommet.js",
+  "description": "The most advanced UX framework for enterprise applications.",
+  "authors": [
+    "Alan Souza",
+    "Bryan Jacquot",
+    "Chris Carlozzi",
+    "Eric Soderberg"
+  ],
+  "homepage": "http://grommet.io",
+  "bugs": "https://github.com/grommet/grommet/issues",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grommet/grommet.git"
+  },
+  "bin": {
+    "grommet": "./bin/grommet.js"
+  },
+  "engine-strict": true,
+  "engines": {
+    "node": ">= 4.4.0"
+  },
+  "dependencies": {
+    "react": "^15.0.2",
+    "grommet": "^0.6.12"
+  },
+  "ignore": [],
+  "_release": "0.6.12",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.6.12",
+    "commit": "45dca4068f62ddadc895e4e2f8709a3c1f969671"
+  },
+  "_source": "https://github.com/HewlettPackard/grommet-bower.git",
+  "_target": "^0.6.12",
+  "_originalSource": "grommet"
+}

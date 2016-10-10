@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>@ViewData["Title"] - musicServer</title>
+
+  <link href='~/lib/grommet/css/grommet.min.css' rel='stylesheet' type='text/css'>
+  <!--<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400italic,400,700' rel='stylesheet' type='text/css'>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+  <script src="~/lib/react/react-with-addons.js"></script>
+  <script src="~/lib/react/react-dom.js"></script>
+  <script src="~/lib/grommet/grommet.min.js"></script>-->
+  <!--<script src="~/lib/requirejs/require.js"></script>-->
+    <environment names="Development">
+    </environment>
+    <environment names="Staging,Production">
+    </environment>
+</head>
+<body>
+  <div id="content"></div>
+  @RenderBody()
+  @{//await FlushAsync()
+ }
+ <environment names="Development">
+  <script type="text/javascript" >
+    alert("TEst");
+  </script> 
+  </environment>
+  <script type="text/javascript" src="bundle.js" />
+  <script type="text/javascript" to_babel>
+  // function getLabel(label, count, colorIndex) {
+  //     return {
+  //       "label": label,
+  //       "value": count,
+  //       "units": count > 1 ? "Tasks" : 'Task',
+  //       "colorIndex": colorIndex
+  //     };
+  //   }
+
+  //   const TodoAppDashboard = (props) => {
+  //     const tasksMap = {
+  //       critical: 0,
+  //       ok: 0,
+  //       warning: 0
+  //     };
+
+  //     const items = props.tasks.map((task) => {
+
+  //       tasksMap[task.type] += 1;
+
+  //       return (
+  //         <tr>
+  //           <td><Grommet.Icons.Status value={task.type} small={true} /></td>
+  //           <td>{task.item}</td>
+  //         </tr>
+  //       );
+  //     });
+
+  //     return (
+  //       <Grommet.Tiles fill={true} flush={false}>
+  //         <Grommet.Tile align="center">
+  //           <Grommet.Meter series={[
+  //             getLabel('Fix Now', tasksMap.critical, 'critical'),
+  //             getLabel('Remember', tasksMap.warning, 'warning'),
+  //             getLabel('Enjoy', tasksMap.ok, 'ok')
+  //           ]} type="circle" />
+  //         </Grommet.Tile>
+  //         <Grommet.Tile>
+  //           <Grommet.Header><h3>My Tasks:</h3></Grommet.Header>
+  //           <Grommet.Table>
+  //             <tbody>
+  //               {items}
+  //             </tbody>
+  //           </Grommet.Table>
+  //         </Grommet.Tile>
+  //       </Grommet.Tiles>
+  //     );
+  //   };
+
+  //   class MainComponent extends React.Component {
+  //     constructor () {
+  //       super();
+
+  //       this.state = {
+  //         tasks: [
+  //           {
+  //             type: 'critical',
+  //             item: 'The coffee pot needs to be cleaned.'
+  //           },
+  //           {
+  //             type: 'ok',
+  //             item: 'It\'s going to be a sunny day tomorrow.'
+  //           },
+  //           {
+  //             type: 'warning',
+  //             item: 'Don\'t forget your anniversary in two weeks.'
+  //           },
+  //           {
+  //             type: 'warning',
+  //             item: 'Pay my late bills.'
+  //           },
+  //           {
+  //             type: 'ok',
+  //             item: 'Go to the Sharks game tomorrow.'
+  //           },
+  //           {
+  //             type: 'ok',
+  //             item: 'Go to Santa Cruz, it\'s summer time.'
+  //           }
+  //         ]
+  //       };
+  //     }
+
+  //     render () {
+  //       return (
+  //         <Grommet.App centered={false}>
+  //           <Grommet.Split>
+  //             <Grommet.Sidebar colorIndex="neutral-1" full={false}>
+  //               <Grommet.Header pad="medium" justify="between">
+  //                 <Grommet.Icons.Base.Cloud type="logo" size="large"/>
+  //                 <Grommet.Title>
+  //                   Menu
+  //                 </Grommet.Title>
+  //                 <Grommet.Button icon={<Grommet.Icons.Base.Close />} />
+  //               </Grommet.Header>
+  //               <Grommet.Menu primary={true}>
+  //                 <Grommet.Anchor>
+  //                   Navigation 1
+  //                 </Grommet.Anchor>
+  //                 <Grommet.Anchor>
+  //                   Navigation 2
+  //                 </Grommet.Anchor>
+  //                 <Grommet.Anchor>
+  //                   Navigation 3
+  //                 </Grommet.Anchor>
+  //               </Grommet.Menu>
+  //             </Grommet.Sidebar>
+  //             <Grommet.Box>
+  //               <Grommet.Header colorIndex="neutral-1" direction="row" justify="between" large={true} pad={{horizontal: 'small', vertical:'small'}}>
+  //                 <Grommet.Button icon={<Grommet.Icons.Base.Cloud size="large" type="logo"/>} />
+  //                 <Grommet.Title>♪ MusicServer ♫</Grommet.Title>
+  //                 <Grommet.Search inline={false} fill={false} size="small" placeHolder="Buscar" />
+  //               </Grommet.Header>
+  //               <TodoAppDashboard tasks={this.state.tasks} />
+  //             </Grommet.Box>
+  //           </Grommet.Split>
+  //         </Grommet.App>
+  //       );
+  //     }
+  //   };
+
+  //   const element = document.getElementById('content');
+  //   ReactDOM.render(React.createElement(MainComponent), element);
+  </script>    
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

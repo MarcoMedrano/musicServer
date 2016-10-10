@@ -1,0 +1,1 @@
+browserify ./wwwroot/js-dist/index.js -o ./wwwroot/bundle.js
