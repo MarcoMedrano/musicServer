@@ -12,6 +12,7 @@
 
 # Build results
 bundle.js
+js-dist/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/

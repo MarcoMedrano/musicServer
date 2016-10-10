@@ -1,1 +1,1 @@
-browserify ./wwwroot/js-dist/index.js -o ./wwwroot/bundle.js
+babel server/wwwroot/js -d server/wwwroot/js-dist & browserify ./server/wwwroot/js-dist/index.js -o ./server/wwwroot/bundle.js
