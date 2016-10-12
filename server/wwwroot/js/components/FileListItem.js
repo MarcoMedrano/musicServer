@@ -17,50 +17,55 @@ export default class FileListItem extends Component {
 
     constructor(props) {
         super(props);
+
+        this._onTogleTip = this._onTogleTip.bind(this);
+        this.state = {tipVisible:false};
         this.file = props.file;
         
-        this.colorStatus = this.getColorStatus();
-        this.iconUi = this.getIcon();
-        this.statusUi =this.getStatus(); 
+        this.colorStatus = this.file.status == "failed" ? "critical" : "plain"; //: "brand";
+        this.colorStatusForMetter = this.file.status == "failed" ? "critical" : "brand";
+        this.errorTip = this.getErrorTip(`icon_${this.file.id}`);
+        this.iconUi = this.getIcon(`icon_${this.file.id}`);
         this.progressUi = this.getProgress();
+        
+    }
+    _onTogleTip() {
+        this.setState({tipVisible:!this.state.tipVisible});
+        console.log(this.state.tipVisible);
     }
 
-    getIcon(){
+    getErrorTip(targetId) {
+        if (this.file.status == "failed" && this.state.tipVisible)
+            return  <Tip target={targetId} onClose={this._onTogleTip} colorIndex='critical'>Failed to load, please try again.</Tip>;
+        else
+            return null;
+    }
+
+    getIcon(id){
         let extension = this.file.name.substr(this.file.name.lastIndexOf(".") + 1 ).toLowerCase();
-        console.log(`extension ${extension}`);
+        var icon = null;
         switch(extension){
             case "mp3":
             case "ogg": 
-                return <MusicIcon size='medium' colorIndex={this.colorStatus} />;
+                icon = <MusicIcon size='medium' colorIndex={this.colorStatus} />
+                break;
             case "avi":
             case "mp4": 
-                return <VideoIcon size='medium' type='status' colorIndex={this.colorStatus} />;
+                icon = <VideoIcon size='medium' type='status' colorIndex={this.colorStatus} id={`icon_${this.file.id}`}/>;
+                break;
             default : 
-                return <UnknowIcon size='medium' colorIndex={this.colorStatus} />;
+                icon = <UnknowIcon size='medium' colorIndex={this.colorStatus} id={`icon_${this.file.id}`}/>;
         }
-    }
-    
-    getColorStatus(){
-        return this.file.status == "failed" ? "critical" : "plain"; //: "brand";
-    }
-
-    getStatus(){
-        var status = null;
-        if (this.file.status == "failed")
-            status = <Status value={"critical"} size='medium' a11yTitle="Error loading file. Please try again."/>
-        return status;
+        //TODO make margin only at right margin={{right:'small'}}
+        return <Button plain={true} onClick={this._onTogleTip} id={id} >{this.getErrorTip(`icon_${this.file.id}`)}{icon}</Button>;
     }
 
     getProgress(){
-        let color = null;
-        if (this.file.status == "failed")
-            color = 'critical';
-
         let progress = null;
         if (this.file.status == "inProgress" || this.file.status == "failed")
             progress = <Box direction="row">
-                            <Meter value={this.file.progress} colorIndex={this.colorStatus} />
-                            <Box pad={{horizontal: 'medium'}}><strong>{"  " + this.file.progress + "%"}</strong></Box>
+                            <Meter value={this.file.progress} colorIndex={this.colorStatusForMetter} />
+                            <Box pad={{horizontal: 'medium'}}><strong>{this.file.progress + "%"}</strong></Box>
                        </Box> 
         return progress;
     }
@@ -68,10 +73,7 @@ export default class FileListItem extends Component {
     render() {
     return (
     <ListItem key={`file_${this.file.id}`} justify='between' separator='horizontal' responsive={false} >
-        {this.iconUi}
-        <Box margin="small">
-            {this.statusUi}
-        </Box>
+        {this.getIcon(`icon_${this.file.id}`)}
         <Box direction="column" flex={true}>
             <Box flex={true} justify="center">
                 {this.file.name}
