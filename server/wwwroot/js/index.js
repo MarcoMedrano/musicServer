@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import App from 'grommet/components/App';
 import Header from 'grommet/components/Header';
 import Title from 'grommet/components/Title';
-
 import Split from 'grommet/components/Split';
 import Sidebar from 'grommet/components/Sidebar';
 import Button from 'grommet/components/Button';
@@ -11,39 +11,28 @@ import Menu from 'grommet/components/Menu';
 import Anchor from 'grommet/components/Anchor';
 import Search from 'grommet/components/Search';
 import Box from 'grommet/components/Box';
+
 import CloseIcon from 'grommet/components/icons/base/Close';
 import CloudIcon from 'grommet/components/icons/base/Cloud';
+
+import MainSidebar from './components/MainSidebar';
+import FileStatusPanel from './components/FileStatusPanel';
 
 
 var GrommetApp = React.createClass({
   render: function() {
+    //var pane1 = <NavSidebar />;
     return (
           <App centered={false}>
             <Split>
-              <Sidebar colorIndex="neutral-1" full={false}>
-                <Header pad="medium" justify="between">
-                  <CloudIcon type="logo" size="large"/>
-                  <Title>
-                    Menu
-                  </Title>
-                  <Button icon={<CloseIcon />} />
-                </Header>
-                <Menu primary={true}>
-                  <Anchor>
-                    Status /Add Files?
-                  </Anchor>
-                  <Anchor>
-                    About
-                  </Anchor>
-                </Menu>
-              </Sidebar>
-              <Box>
+              <MainSidebar />
+              <Box full={true}>
                 <Header colorIndex="neutral-1" direction="row" justify="between" pad={{horizontal: 'small', vertical:'small'}}>
                   <Button icon={<CloudIcon size="large" type="logo"/>} />
                   <Title>♪ MusicServer++ ♫</Title>
-                  <Search inline={false} fill={false} size="small" placeHolder="Buscar" />
+                  <Search inline={false} fill={false} dropAlign={{"right": "right"}} size="small" placeHolder="Buscar" />
                 </Header>
-
+                <FileStatusPanel />
               </Box>
             </Split>
           </App>
