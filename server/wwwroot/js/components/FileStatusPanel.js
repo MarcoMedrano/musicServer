@@ -110,16 +110,16 @@ export default class FileStatusPanel extends Component {
     }
 
     return (
-      <Section primary={true} flex={true}>
+      <Section primary={true} flex={true} pad={{vertical:'small'}}>
         <Box direction='column'>
-          <Box basis='1/4' align="center">
+          <Box basis='1/3' align="center">
             <Meter series={series} type="circle" label={false} onActive={(index) => this.setState({ index: index })} />
-            <Box direction="row" justify="between" align="center" responsive={false}>
-              <Value value={value} units="Files" align="center" label={label} />
+            <Box margin={{top:'small', bottom:'medium'}} justify="center" align="center" responsive={false}>
+              <Value value={value} units="Files" size="small" label={label} />
             </Box>
           </Box>
-          <Box basis='3/4' align="center">
-            <Box pad={{ vertical: 'medium' }} >
+          <Box basis='2/3' align="center">
+            <Box pad={{ vertical: 'small' }} >
               <Button label="Add File" primary={true} onClick={this._onRequestForAdd} />
             </Box>
             <List>
