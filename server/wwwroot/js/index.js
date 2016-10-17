@@ -35,7 +35,7 @@ class MainApp extends Component {
   }
 
   render() {
-    let mainMenu = this.state.mainMenuVisible ? <MainSidebar/> : null;
+    let mainMenu = this.state.mainMenuVisible ? <MainSidebar onLogoIconClick = {this._onLogoIconClicked}/> : null;
 
     //TODO: right as priority is not working, check later
     return (
