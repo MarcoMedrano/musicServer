@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
 
+import Search from 'grommet/components/Search';
 import Box from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
+import Header from 'grommet/components/Header';
 import Heading from 'grommet/components/Heading';
+import Title from 'grommet/components/Title';
 import Meter from 'grommet/components/Meter';
 import Section from 'grommet/components/Section';
 import List from 'grommet/components/List';
 import ListItem from 'grommet/components/ListItem';
 import Value from 'grommet/components/Value';
+import Footer from 'grommet/components/Footer';
 
 import Status from 'grommet/components/icons/Status';
+import AddIcon from 'grommet/components/icons/base/Add';
+import PulseIcon from 'grommet/components/icons/Pulse';
+import CloudIcon from 'grommet/components/icons/base/Cloud';
+
 
 import FileListItem from './FileListItem';
 
@@ -19,8 +27,8 @@ function getLabel(label, value, colorIndex) {
 
 export default class FileStatusPanel extends Component {
 
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
 
     this._onRequestForAdd = this._onRequestForAdd.bind(this);
     this._onRequestForAddClose = this._onRequestForAddClose.bind(this);
@@ -33,7 +41,7 @@ export default class FileStatusPanel extends Component {
     // };
 
     this.state = {
-      files: [{id:0, progress: 80, name:"maluma - Borro Cassett.mp3", status:"inProgress"},
+      files: [{id:0, progress: 80, name:"maluma - thalia Borro Cassett.mp3", status:"inProgress"},
               {id:5, progress: 50, name:"AUD - Solo por tu amor.mp3", status:"inProgress"},
               {id:1, progress: 10, name:"maluma - Borro Cassett grabado de donde nose q putas lugar.mp3", status:"failed"},
               {id:6, progress: 90, name:"maluma - Other .avi", status:"failed"},
@@ -46,6 +54,7 @@ export default class FileStatusPanel extends Component {
   }
 
   _onRequestForAdd () {
+    console.log('request add');
     this.setState({addFile: true});
   }
 
@@ -108,11 +117,16 @@ export default class FileStatusPanel extends Component {
       series.forEach(serie => value += serie.value);
       label = 'Total';
     }
-
+//////////// SET YOUR DEV ENV /////////////////
     return (
-      <Section primary={true} flex={true} pad={{vertical:'small'}}>
+      <Section primary={true} flex={true} pad={{vertical:null}}>
+        <Header fixed={true} direction="row" justify="between"  colorIndex="neutral-1">
+          <Button icon={<CloudIcon size="large" type="logo" />} onClick={this.props.onLogoIconClick} />
+          <Title>♪ MusicServer++ ♫</Title>
+          <Search inline={false} fill={false} dropAlign={{"right": "right"}} size="small" placeHolder="Buscar" />
+        </Header>
         <Box direction='column'>
-          <Box basis='1/3' align="center">
+          <Box basis='1/4' align="center">
             <Meter series={series} type="circle" label={false} onActive={(index) => this.setState({ index: index })} />
             <Box margin={{top:'small', bottom:'medium'}} justify="center" align="center" responsive={false}>
               <Value value={value} units="Files" size="small" label={label} />
@@ -120,14 +134,17 @@ export default class FileStatusPanel extends Component {
           </Box>
           <Box basis='2/3' align="center">
             <Box pad={{ vertical: 'small' }} >
-              <Button label="Add File" primary={true} onClick={this._onRequestForAdd} />
+              <Button label="Add File" primary={false} onClick={this._onRequestForAdd} />
             </Box>
             <List>
               {files}
             </List>
           </Box>
+          <Footer basis='1/4' colorIndex='accent-3-a' primary={true} size='small'>
+          Add File
+          <Button align='end' plain={true} icon={<AddIcon size='small'/>}/>
+          </Footer>
         </Box>
-        {addFile}
       </Section>
     );
   }
