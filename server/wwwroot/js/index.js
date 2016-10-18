@@ -40,7 +40,7 @@ class MainApp extends Component {
     //TODO: right as priority is not working, check later
     return (
       <App centered={false}>
-        <Split flex="right" priority="right" separator={true}>
+        <Split flex='both' priority='right' separator={true}>
           {mainMenu}
           <FileStatusPanel onLogoIconClick = {this._onLogoIconClicked}/>
         </Split>

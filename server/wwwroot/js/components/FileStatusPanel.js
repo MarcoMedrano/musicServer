@@ -39,7 +39,7 @@ export default class FileStatusPanel extends Component {
     //   files: [],
     //   addFile: false
     // };
-
+    
     this.state = {
       files: [{id:0, progress: 80, name:"maluma - thalia Borro Cassett.mp3", status:"inProgress"},
               {id:5, progress: 50, name:"AUD - Solo por tu amor.mp3", status:"inProgress"},
@@ -50,7 +50,14 @@ export default class FileStatusPanel extends Component {
               {id:4, progress: 100, name:"maluma - Desde esa noche unknow format.accfile", status:"completed"},
               {id:10, progress: 100, name:"AUD - Tres Notas.mp3", status:"completed"}],
       addFile: false
-    }; 
+    };
+
+    // let files =[];
+    // for(let i=0; i<100; i++)
+    // {
+    //   files.push({id:i, progress: 50, name:"AUD - Solo por tu amor.mp3", status:"inProgress"});
+    // } 
+    // this.state = {files:files, addFile:false};
   }
 
   _onRequestForAdd () {
@@ -62,7 +69,8 @@ export default class FileStatusPanel extends Component {
     this.setState({addFile: false});
   }
 
-  _onRequestForDelete (index) {
+  _onRequestForDelete (file) {
+    let index = this.state.files.indexOf(file);
     let files = this.state.files;
     files.splice(index, 1);
     this.setState({files: files});
@@ -91,7 +99,7 @@ export default class FileStatusPanel extends Component {
         separator = 'horizontal';
       }
       return (
-        <FileListItem key={`fli_${file.id}`} file={file} onDelete = {x => {}}/>
+        <FileListItem key={`fli_${file.id}`} file={file} onCancel = {this._onRequestForDelete}/>
       );
     }, this);
 
@@ -119,20 +127,20 @@ export default class FileStatusPanel extends Component {
     }
 //////////// SET YOUR DEV ENV /////////////////
     return (
-      <Section primary={true} flex={true} pad={{vertical:null}}>
-        <Header fixed={true} direction="row" justify="between"  colorIndex="neutral-1">
+      <Section primary={true}  pad={{vertical:null}}  full={true}>
+        <Header fixed={true} justify="between"  colorIndex="neutral-1">
           <Button icon={<CloudIcon size="large" type="logo" />} onClick={this.props.onLogoIconClick} />
           <Title>♪ MusicServer++ ♫</Title>
           <Search inline={false} fill={false} dropAlign={{"right": "right"}} size="small" placeHolder="Buscar" />
         </Header>
         <Box direction='column'>
-          <Box basis='1/4' align="center">
+          <Box align="center">
             <Meter series={series} type="circle" label={false} onActive={(index) => this.setState({ index: index })} />
             <Box margin={{top:'small', bottom:'medium'}} justify="center" align="center" responsive={false}>
               <Value value={value} units="Files" size="small" label={label} />
             </Box>
           </Box>
-          <Box basis='2/3' align="center">
+          <Box  align="center">
             <Box pad={{ vertical: 'small' }} >
               <Button label="Add File" primary={false} onClick={this._onRequestForAdd} />
             </Box>
@@ -140,7 +148,7 @@ export default class FileStatusPanel extends Component {
               {files}
             </List>
           </Box>
-          <Footer basis='1/4' colorIndex='accent-3-a' primary={true} size='small'>
+          <Footer colorIndex='accent-3-a' primary={true} size='small' fixed={true} >
           Add File
           <Button align='end' plain={true} icon={<AddIcon size='small'/>}/>
           </Footer>

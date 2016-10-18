@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import Box from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
@@ -19,7 +19,8 @@ export default class FileListItem extends Component {
         super(props);
 
         this._onTogleTip = this._onTogleTip.bind(this);
-        this.state = {tipVisible:false};
+        this._onCancel = this._onCancel.bind(this);
+        this.state = {tipVisible:false, delete:false};
         this.file = props.file;
         
         this.colorStatus = this.file.status == "failed" ? "critical" : "plain"; //: "brand";
@@ -29,6 +30,12 @@ export default class FileListItem extends Component {
         this.progressUi = this.getProgress();
         
     }
+    _onCancel () {
+        console.log("Cancel pressed ");
+        //this.setState({tipVisible: this.state.tipVisible, delete:true});
+        this.props.onCancel(this.file);
+    }
+
     _onTogleTip() {
         this.setState({tipVisible:!this.state.tipVisible});
         console.log(this.state.tipVisible);
@@ -72,7 +79,7 @@ export default class FileListItem extends Component {
 
     render() {
     return (
-    <ListItem key={`file_${this.file.id}`} justify='between' separator='horizontal' responsive={false} >
+    <ListItem key={`file_${this.file.id}`} justify='between' separator='horizontal' responsive={false} size={{height: 'auto', width: {min: 'medium'}}}>
         {this.getIcon(`icon_${this.file.id}`)}
         <Box direction="column" flex={true}>
             <Box flex={true} justify="center">
@@ -80,8 +87,13 @@ export default class FileListItem extends Component {
             </Box>
             {this.progressUi}
         </Box>
-        <Button plain={true} onClick={this.props.onDelete(this.file)} icon={<CloseIcon size='small'/>} a11yTitle={`Cancel ${this.file.name} file`} />
+        <Button plain={true} onClick={this._onCancel} icon={<CloseIcon size='small'/>} a11yTitle={`Cancel ${this.file.name} file`} />
     </ListItem>
     );
   }
 }
+
+FileListItem.propTypes = {
+  onCancel: PropTypes.func/*,
+  file: PropTypes.string*/
+};
