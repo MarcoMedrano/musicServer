@@ -34,7 +34,8 @@ export default class FileStatusPanel extends Component {
     this._onRequestForAddClose = this._onRequestForAddClose.bind(this);
     this._onRequestForDelete = this._onRequestForDelete.bind(this);
     this._onAddFile = this._onAddFile.bind(this);
-
+    this._onFileUpload = this._onFileUpload.bind(this);
+    
     // this.state = {
     //   files: [],
     //   addFile: false
@@ -48,7 +49,7 @@ export default class FileStatusPanel extends Component {
               {id:2, sourceType:'bluetooth', progress: 99, name:"maluma - Desde esa noche.mp3", status:"inProgress"},
               {id:3, sourceType:'usb', progress: 100, name:"maluma - Desde esa noche.mp4", status:"completed"},
               {id:4, sourceType:'usb', progress: 100, name:"maluma - Desde esa noche unknow format.accfile", status:"completed"},
-              {id:10, sourceType:'usb', progress: 100, name:"AUD - Tres Notas.mp3", status:"completed"}],
+              {id:7, sourceType:'usb', progress: 100, name:"AUD - Tres Notas.mp3", status:"completed"}],
       addFile: false
     };
 
@@ -60,20 +61,37 @@ export default class FileStatusPanel extends Component {
     // this.state = {files:files, addFile:false};
   }
 
+  componentDidMount() {
+    document.getElementById('inputfile').addEventListener('change', this._onFileUpload, false);
+    }
+
+  _onFileUpload (e){
+    let filesToAdd = [];
+
+    for(let i=0; i< e.target.files.length; i++){
+      let file = e.target.files[i];
+      console.log(file);
+      filesToAdd.push({id:this.state.files.length + i, sourceType:'wifi', progress: 1, name:file.name, status:'inProgress'});
+    }
+
+    let files = filesToAdd.concat(this.state.files);
+    this.setState({files: files, addFile: true});
+  }
+
   _onRequestForAdd () {
     console.log('request add');
-    this.setState({addFile: true});
+    document.getElementById('inputfile').click(); 
   }
 
   _onRequestForAddClose () {
-    this.setState({addFile: false});
+    this.setState({files: files, addFile: false});
   }
 
   _onRequestForDelete (file) {
     let index = this.state.files.indexOf(file);
     let files = this.state.files;
     files.splice(index, 1);
-    this.setState({files: files});
+    this.setState({files: files, addFile: false});
   }
 
   _onAddFile (file) {
@@ -142,7 +160,8 @@ export default class FileStatusPanel extends Component {
           </Box>
           <Box  align="center">
             <Box pad={{ vertical: 'small' }} >
-              <Button label="Add File" primary={false} onClick={this._onRequestForAdd} />
+              <input type="file" multiple style={{display:'none'}} id="inputfile"/>
+              <Button label="Add Files" primary={false} onClick={this._onRequestForAdd} />
             </Box>
             <List>
               {files}

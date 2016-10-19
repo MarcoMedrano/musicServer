@@ -70,6 +70,7 @@ export default class FileListItem extends Component {
                 break;
             case "avi":
             case "mp4": 
+            case "mpg": 
                 icon = <VideoIcon size='medium' type='status' colorIndex={this.colorStatus} id={`icon_${this.file.id}`}/>;
                 break;
             default : 
