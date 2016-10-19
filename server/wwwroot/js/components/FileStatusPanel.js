@@ -146,7 +146,7 @@ export default class FileStatusPanel extends Component {
 //////////// SET YOUR DEV ENV /////////////////
     return (
       <Section primary={true}  pad={{vertical:null}}  full={true}>
-        <Header fixed={true} justify="between"  colorIndex="neutral-1">
+        <Header fixed={true} justify="between"  colorIndex='brand'>
           <Button icon={<CloudIcon size="large" type="logo" />} onClick={this.props.onLogoIconClick} />
           <Title>♪ MusicServer++ ♫</Title>
           <Search inline={false} fill={false} dropAlign={{"right": "right"}} size="small" placeHolder="Buscar" />
@@ -167,10 +167,6 @@ export default class FileStatusPanel extends Component {
               {files}
             </List>
           </Box>
-          <Footer colorIndex='accent-3-a' primary={true} size='small' fixed={true} >
-          Add File
-          <Button align='end' plain={true} icon={<AddIcon size='small'/>}/>
-          </Footer>
         </Box>
       </Section>
     );

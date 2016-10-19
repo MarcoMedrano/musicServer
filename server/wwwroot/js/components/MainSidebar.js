@@ -28,7 +28,7 @@ class MainSidebar extends Component {
 
   render() {
     return (
-      <Sidebar colorIndex='neutral-1' >
+      <Sidebar colorIndex='brand' >
         <Header justify="between" pad={{horizontal:'small'}}>
           <Button plain={true} icon={<CloudIcon size='large' type='logo' />} onClick={this._onClose} />
           <Title onClick={this._onClose} a11yTitle='Close Menu'> Menu </Title>
