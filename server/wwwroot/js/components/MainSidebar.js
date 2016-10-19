@@ -32,8 +32,8 @@ class MainSidebar extends Component {
     // Change to SideBar when fixed bug of sizes and scroll
     //<Box colorIndex='brand' full='vertical' size={{height:'auto', width:'large'}}>
     return (
-      <Sidebar>
-        <Header fixed={true} justify="between" pad={{horizontal:'small'}}>
+      <Sidebar fixed={true}>
+        <Header justify="between" pad={{horizontal:'small'}} colorIndex='brand'>
           <Button plain={true} icon={<CloudIcon size='large' type='logo' />} onClick={this._onClose} />
           <Title onClick={this._onClose} a11yTitle='Close Menu'> Menu </Title>
           
