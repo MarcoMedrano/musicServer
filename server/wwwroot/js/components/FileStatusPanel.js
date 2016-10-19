@@ -41,14 +41,14 @@ export default class FileStatusPanel extends Component {
     // };
     
     this.state = {
-      files: [{id:0, progress: 80, name:"maluma - thalia Borro Cassett.mp3", status:"inProgress"},
-              {id:5, progress: 50, name:"AUD - Solo por tu amor.mp3", status:"inProgress"},
-              {id:1, progress: 10, name:"maluma - Borro Cassett grabado de donde nose q putas lugar.mp3", status:"failed"},
-              {id:6, progress: 90, name:"maluma - Other .avi", status:"failed"},
-              {id:2, progress: 100, name:"maluma - Desde esa noche.mp3", status:"completed"},
-              {id:3, progress: 100, name:"maluma - Desde esa noche.mp4", status:"completed"},
-              {id:4, progress: 100, name:"maluma - Desde esa noche unknow format.accfile", status:"completed"},
-              {id:10, progress: 100, name:"AUD - Tres Notas.mp3", status:"completed"}],
+      files: [{id:0, sourceType:'wifi', progress: 80, name:"maluma - thalia Borro Cassett.mp3", status:"inProgress"},
+              {id:5, sourceType:'bluetooth', progress: 50, name:"AUD - Solo por tu amor.mp3", status:"inProgress"},
+              {id:1, sourceType:'bluetooth', progress: 10, name:"maluma - Borro Cassett grabado de donde nose q putas lugar.mp3", status:"failed"},
+              {id:6, sourceType:'wifi', progress: 90, name:"maluma - Other .avi", status:"failed"},
+              {id:2, sourceType:'bluetooth', progress: 99, name:"maluma - Desde esa noche.mp3", status:"inProgress"},
+              {id:3, sourceType:'usb', progress: 100, name:"maluma - Desde esa noche.mp4", status:"completed"},
+              {id:4, sourceType:'usb', progress: 100, name:"maluma - Desde esa noche unknow format.accfile", status:"completed"},
+              {id:10, sourceType:'usb', progress: 100, name:"AUD - Tres Notas.mp3", status:"completed"}],
       addFile: false
     };
 
