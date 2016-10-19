@@ -6,6 +6,7 @@ import Sidebar from 'grommet/components/Sidebar';
 import Header from 'grommet/components/Header';
 import Title from 'grommet/components/Title';
 import Box from 'grommet/components/Box';
+import Footer from 'grommet/components/Footer';
 
 //import Logo from './Logo'; // './HPELogo';
 import Menu from 'grommet/components/Menu';
@@ -29,10 +30,10 @@ class MainSidebar extends Component {
 
   render() {
     // Change to SideBar when fixed bug of sizes and scroll
-    //size={{height:'xxlarge', width:'medium'}}
+    //<Box colorIndex='brand' full='vertical' size={{height:'auto', width:'large'}}>
     return (
-      <Box colorIndex='brand' full='vertical' size={{height:'auto', width:'large'}} >
-        <Header justify="between" pad={{horizontal:'small'}}>
+      <Sidebar>
+        <Header fixed={true} justify="between" pad={{horizontal:'small'}}>
           <Button plain={true} icon={<CloudIcon size='large' type='logo' />} onClick={this._onClose} />
           <Title onClick={this._onClose} a11yTitle='Close Menu'> Menu </Title>
           
@@ -45,7 +46,7 @@ class MainSidebar extends Component {
           <Anchor label='File Status' href='home/Files Status'  primary={true} />
           <Anchor label='About' href='home/About' />
         </Menu>
-      </Box>
+      </Sidebar>
     );
   }
 }

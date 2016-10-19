@@ -143,9 +143,9 @@ export default class FileStatusPanel extends Component {
       series.forEach(serie => value += serie.value);
       label = 'Total';
     }
-//////////// SET YOUR DEV ENV /////////////////
+/// <Section primary={true}  pad={{vertical:null}}  full={true}> ///
     return (
-      <Section primary={true}  pad={{vertical:null}}  full={true}>
+      <Box full={true}>
         <Header fixed={true} justify="between"  colorIndex='brand'>
           <Button icon={<CloudIcon size="large" type="logo" />} onClick={this.props.onLogoIconClick} />
           <Title>♪ MusicServer++ ♫</Title>
@@ -168,7 +168,7 @@ export default class FileStatusPanel extends Component {
             </List>
           </Box>
         </Box>
-      </Section>
+      </Box>
     );
   }
 }
