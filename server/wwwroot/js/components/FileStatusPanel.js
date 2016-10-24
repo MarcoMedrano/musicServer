@@ -18,12 +18,7 @@ import AddIcon from 'grommet/components/icons/base/Add';
 import PulseIcon from 'grommet/components/icons/Pulse';
 import CloudIcon from 'grommet/components/icons/base/Cloud';
 
-
 import FileListItem from './FileListItem';
-
-function getLabel(label, value, colorIndex) {
-  return { label, value, colorIndex };
-}
 
 export default class FileStatusPanel extends Component {
 
@@ -31,34 +26,38 @@ export default class FileStatusPanel extends Component {
     super(props);
 
     this._onRequestForAdd = this._onRequestForAdd.bind(this);
-    this._onRequestForAddClose = this._onRequestForAddClose.bind(this);
     this._onRequestForDelete = this._onRequestForDelete.bind(this);
-    this._onAddFile = this._onAddFile.bind(this);
     this._onFileUpload = this._onFileUpload.bind(this);
     
     // this.state = {
     //   files: [],
-    //   addFile: false
+    //   metterIndexSelected: -1
     // };
-    
+    /*
     this.state = {
       files: [{id:0, sourceType:'wifi', progress: 80, name:"maluma - thalia Borro Cassett.mp3", status:"inProgress"},
-              {id:5, sourceType:'bluetooth', progress: 50, name:"AUD - Solo por tu amor.mp3", status:"inProgress"},
-              {id:1, sourceType:'bluetooth', progress: 10, name:"maluma - Borro Cassett grabado de donde nose q putas lugar.mp3", status:"failed"},
-              {id:6, sourceType:'wifi', progress: 90, name:"maluma - Other .avi", status:"failed"},
-              {id:2, sourceType:'bluetooth', progress: 99, name:"maluma - Desde esa noche.mp3", status:"inProgress"},
-              {id:3, sourceType:'usb', progress: 100, name:"maluma - Desde esa noche.mp4", status:"completed"},
-              {id:4, sourceType:'usb', progress: 100, name:"maluma - Desde esa noche unknow format.accfile", status:"completed"},
+              {id:1, sourceType:'bluetooth', progress: 50, name:"AUD - Solo por tu amor.mp3", status:"inProgress"},
+              {id:2, sourceType:'bluetooth', progress: 10, name:"maluma - Borro Cassett grabado de donde nose q putas lugar.mp3", status:"failed"},
+              {id:3, sourceType:'wifi', progress: 90, name:"maluma - Other .avi", status:"failed"},
+              {id:4, sourceType:'bluetooth', progress: 99, name:"maluma - Desde esa noche.mp3", status:"inProgress"},
+              {id:5, sourceType:'usb', progress: 100, name:"maluma - Desde esa noche.mp4", status:"completed"},
+              {id:6, sourceType:'usb', progress: 100, name:"maluma - Desde esa noche unknow format.accfile", status:"completed"},
               {id:7, sourceType:'usb', progress: 100, name:"AUD - Tres Notas.mp3", status:"completed"}],
-      addFile: false
+      metterIndexSelected: -1
     };
+*/
+    let files =[];
+    for(let i=0; i<100; i++)
+    {
+      files.push({id:i, progress: 50, name:"AUD - Solo por tu amor.mp3", status:"inProgress"});
+    } 
+    this.state = {files:files,metterIndexSelected: -1};
 
-    // let files =[];
-    // for(let i=0; i<100; i++)
-    // {
-    //   files.push({id:i, progress: 50, name:"AUD - Solo por tu amor.mp3", status:"inProgress"});
-    // } 
-    // this.state = {files:files, addFile:false};
+    this.series = [
+      {label:'Completed', value:0, colorIndex:'ok'},
+      {label:'In Progress', value:0, colorIndex:'graph-1'},
+      {label:'Failed', value:0, colorIndex:'critical'}
+    ];
   }
 
   componentDidMount() {
@@ -66,16 +65,17 @@ export default class FileStatusPanel extends Component {
     }
 
   _onFileUpload (e){
+    console.log("_onFileUpload " + e.target.files.length);
     let filesToAdd = [];
 
     for(let i=0; i< e.target.files.length; i++){
       let file = e.target.files[i];
       console.log(file);
-      filesToAdd.push({id:this.state.files.length + i, sourceType:'wifi', progress: 1, name:file.name, status:'inProgress'});
+      filesToAdd.push({id:this.state.files.length + i , sourceType:'wifi', progress: 1, name:file.name, status:'inProgress'});
     }
 
     let files = filesToAdd.concat(this.state.files);
-    this.setState({files: files, addFile: true});
+    this.setState({files: files, metterIndexSelected: this.state.metterIndexSelected});
   }
 
   _onRequestForAdd () {
@@ -83,66 +83,45 @@ export default class FileStatusPanel extends Component {
     document.getElementById('inputMultipleFiles').click(); 
   }
 
-  _onRequestForAddClose () {
-    this.setState({files: files, addFile: false});
-  }
-
   _onRequestForDelete (file) {
     let index = this.state.files.indexOf(file);
     let files = this.state.files;
     files.splice(index, 1);
-    this.setState({files: files, addFile: false});
+    this.setState({files: files, metterIndexSelected: this.state.metterIndexSelected});
   }
 
-  _onAddFile (file) {
-    let files = this.state.files;
-    files.push(file);
-    this.setState({files: files, addFile: false});
+  renderFileListItems() {
+    console.log('rendering FileListItems');
+
+    return this.state.files.map((file, index) => {
+      return <FileListItem key={`fli_${file.id}`} file={file} onCancel = {this._onRequestForDelete}/>;
+    }, this);
+  }
+
+  renderMetter(){
+    console.log('rendering metter');
+    this.series[0].value = this.state.files.filter(f => f.status == 'completed').length;
+    this.series[1].value = this.state.files.filter(f => f.status == 'inProgress').length;
+    this.series[2].value = this.state.files.filter(f => f.status == 'failed').length;
+
+    let value, label;
+    if (this.state.metterIndexSelected >= 0) {
+      value = this.series[this.state.metterIndexSelected].value;
+      label = this.series[this.state.metterIndexSelected].label;
+    } else {
+      value = this.state.files.length;
+      label = 'Total';
+    }
+
+    return <Box align="center">
+              <Meter series={this.series} type="circle" label={false} onActive={(index) => this.setState({ metterIndexSelected: index, files:this.state.files })} />
+              <Box margin={{top:'small', bottom:'medium'}} justify="center" align="center" responsive={false}>
+                <Value value={value} units="Files" size="small" label={label} />
+              </Box>
+          </Box>
   }
 
   render () {
-
-    let fileStatus = {
-      completed: 0,
-      inProgress: 0,
-      failed: 0
-    };
-
-    let files = this.state.files.map((file, index) => {
-
-      fileStatus[file.status] += 1;
-
-      let separator;
-      if (index === 0) {
-        separator = 'horizontal';
-      }
-      return (
-        <FileListItem key={`fli_${file.id}`} file={file} onCancel = {this._onRequestForDelete}/>
-      );
-    }, this);
-
-    let addFile;
-    if (this.state.addFile) {
-        //<TodoAddFileForm onClose={this._onRequestForAddClose} onSubmit={this._onAddFile} />
-      
-      addFile = (<div/>);
-    }
-
-    const series = [
-      getLabel('Completed', fileStatus.completed, 'ok'),
-      getLabel('In Progress', fileStatus.inProgress, 'graph-1'),
-      getLabel('Failed', fileStatus.failed, 'critical')
-    ];
-
-    let value, label;
-    if (this.state.index >= 0) {
-      value = series[this.state.index].value;
-      label = series[this.state.index].label;
-    } else {
-      value = 0;
-      series.forEach(serie => value += serie.value);
-      label = 'Total';
-    }
 /// <Section primary={true}  pad={{vertical:null}}  full={true}> ///
     return (
       <Box full={true}>
@@ -152,19 +131,14 @@ export default class FileStatusPanel extends Component {
           <Search inline={false} fill={false} dropAlign={{"right": "right"}} size="small" placeHolder="Buscar" />
         </Header>
         <Box direction='column'>
-          <Box align="center">
-            <Meter series={series} type="circle" label={false} onActive={(index) => this.setState({ index: index })} />
-            <Box margin={{top:'small', bottom:'medium'}} justify="center" align="center" responsive={false}>
-              <Value value={value} units="Files" size="small" label={label} />
-            </Box>
-          </Box>
+          {this.renderMetter()}
           <Box  align="center">
             <Box pad={{ vertical: 'small' }} >
               <input type="file" multiple style={{display:'none'}} id="inputMultipleFiles"/>
               <Button label="Add Files" primary={false} onClick={this._onRequestForAdd} />
             </Box>
             <List>
-              {files}
+              {this.renderFileListItems()}
             </List>
           </Box>
         </Box>
