@@ -9,11 +9,13 @@ import Tip from 'grommet/components/Tip';
 
 import Status from 'grommet/components/icons/Status';
 import CloseIcon from 'grommet/components/icons/base/Close';
-import MusicIcon from 'grommet/components/icons/base/Compare';
+import ReloadIcon from 'grommet/components/icons/base/Refresh';
 import VideoIcon from 'grommet/components/icons/base/Desktop';
 import UnknowIcon from 'grommet/components/icons/base/Help';
 import WifiIcon from 'grommet/components/icons/base/Rss';
 import SVGIcon from 'grommet/components/SVGIcon'
+
+import {fileTypeMap} from '../models/constants.js'
 
 export default class FileListItem extends Component {
 
@@ -21,6 +23,7 @@ export default class FileListItem extends Component {
         super(props);
 
         this._onTogleTip = this._onTogleTip.bind(this);
+        this._onRequestForAdd = this._onRequestForAdd.bind(this);
         this._onCancel = this._onCancel.bind(this);
         this.sourceTypeIcon = this.sourceTypeIcon.bind(this);
         this.state = {tipVisible:false, delete:false};
@@ -44,6 +47,11 @@ export default class FileListItem extends Component {
         console.log(this.state.tipVisible);
     }
 
+   _onRequestForAdd () {
+      console.log('request add single file');
+      document.getElementById(`inputfile_${this.file.id}`).click(); 
+   }
+
     getErrorTip(targetId) {
         if (this.file.status == "failed" && this.state.tipVisible)
             return  <Tip target={targetId} onClose={this._onTogleTip} colorIndex='critical'>Failed to load, please try again.</Tip>;
@@ -53,24 +61,21 @@ export default class FileListItem extends Component {
 
     getIcon(id){
         let extension = this.file.name.substr(this.file.name.lastIndexOf(".") + 1 ).toLowerCase();
+        let fileType = fileTypeMap[extension];
+
         var icon = null;
-        switch(extension){
-            case "mp3":
-            case "ogg": 
+        switch(fileType){
+            case "audio":
                 icon =  <span className="grommetux-button__icon">
                 <SVGIcon size='medium' viewBox="0 0 48 48" colorIndex={this.colorStatus} >
-                <g stroke="#865CD6" strokeWidth="3" fill="none" >
+                <g stroke="#865CD6" strokeWidth="2" fill="none" >
                     <path d="M 45.628238,1.922137 C 45.43535,1.7667728 45.180839,1.6960783 44.92365,1.7240278 L 17.240188,5.0211959 c -0.445614,0.053439 -0.778709,0.4019739 -0.778709,0.815456 l 0,4.9461621 0,3.462398 0,21.401593 c -1.551166,-1.635845 -3.970345,-2.692154 -6.6967181,-2.692154 -4.6856498,0 -8.4836422,3.108099 -8.4836422,6.941233 0,3.833132 3.7979924,6.941234 8.4836422,6.941234 4.6856491,0 8.4836431,-3.108102 8.4836431,-6.941234 0,-0.272913 -0.02413,-0.540896 -0.06162,-0.806411 0.0357,-0.08878 0.06162,-0.18167 0.06162,-0.281959 l 0,-23.84056 25.897431,-3.085083 0,15.543794 c -1.55206,-1.635022 -3.971239,-2.691331 -6.697611,-2.691331 -4.685649,0 -8.483643,3.1081 -8.483643,6.941234 0,3.833133 3.797994,6.941235 8.483643,6.941235 4.685647,0 8.483641,-3.108102 8.483641,-6.941235 0,-0.07563 -0.01082,-0.148787 -0.01326,-0.223592 0.0017,-0.0222 0.01326,-0.0411 0.01326,-0.06329 l 0,-20.442279 0,-3.4615744 0,-4.9453423 c 0,-0.236745 -0.110722,-0.4619807 -0.303627,-0.6173451 z" />
                 </g>
                </SVGIcon>
                </span>
-                
                 //icon = <MusicIcon size='medium' colorIndex={this.colorStatus} />;
-
                 break;
-            case "avi":
-            case "mp4": 
-            case "mpg": 
+            case "video": 
                 icon = <VideoIcon size='medium' type='status' colorIndex={this.colorStatus} id={`icon_${this.file.id}`}/>;
                 break;
             default : 
@@ -104,14 +109,22 @@ export default class FileListItem extends Component {
         }
     }
     getProgress(){
-        let progress = null;
         if (this.file.status == "inProgress" || this.file.status == "failed")
-            progress = <Box direction="row">
+            return <Box direction="row">
                         {this.sourceTypeIcon()}
                         <Meter value={this.file.progress} colorIndex={this.colorStatusForMetter} />
                         <Box pad={{horizontal: 'medium'}}><strong>{this.file.progress + "%"}</strong></Box>
-                       </Box> 
-        return progress;
+                    </Box> 
+        return null;
+    }
+
+    renderReloadButton(){
+       //TODO lets enable this for next version.
+        if (this.file.status == "failed" && false)
+            return  <Button plain={true} onClick={this._onRequestForAdd} icon={<ReloadIcon size='small'/>} a11yTitle={`Try to reload ${this.file.name} file`}>
+                       <input id={`inputfile_${this.file.id}`} accept={fileTypeMap[this.file.name.substr(this.file.name.lastIndexOf(".")+1)] + '/*'} type='file' style={{display:'none'}}/>
+                    </Button>
+        return null;
     }
 
     render() {
@@ -124,6 +137,7 @@ export default class FileListItem extends Component {
             </Box>
             {this.getProgress()}
         </Box>
+        {this.renderReloadButton()}
         <Button plain={true} onClick={this._onCancel} icon={<CloseIcon size='small'/>} a11yTitle={`Cancel ${this.file.name} file`} />
     </ListItem>
     );

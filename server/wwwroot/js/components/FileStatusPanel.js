@@ -62,7 +62,7 @@ export default class FileStatusPanel extends Component {
   }
 
   componentDidMount() {
-    document.getElementById('inputfile').addEventListener('change', this._onFileUpload, false);
+    document.getElementById('inputMultipleFiles').addEventListener('change', this._onFileUpload, false);
     }
 
   _onFileUpload (e){
@@ -80,7 +80,7 @@ export default class FileStatusPanel extends Component {
 
   _onRequestForAdd () {
     console.log('request add');
-    document.getElementById('inputfile').click(); 
+    document.getElementById('inputMultipleFiles').click(); 
   }
 
   _onRequestForAddClose () {
@@ -160,7 +160,7 @@ export default class FileStatusPanel extends Component {
           </Box>
           <Box  align="center">
             <Box pad={{ vertical: 'small' }} >
-              <input type="file" multiple style={{display:'none'}} id="inputfile"/>
+              <input type="file" multiple style={{display:'none'}} id="inputMultipleFiles"/>
               <Button label="Add Files" primary={false} onClick={this._onRequestForAdd} />
             </Box>
             <List>
