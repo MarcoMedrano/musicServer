@@ -33,7 +33,7 @@ export default class FileStatusPanel extends Component {
     //   files: [],
     //   metterIndexSelected: -1
     // };
-    /*
+
     this.state = {
       files: [{id:0, sourceType:'wifi', progress: 80, name:"maluma - thalia Borro Cassett.mp3", status:"inProgress"},
               {id:1, sourceType:'bluetooth', progress: 50, name:"AUD - Solo por tu amor.mp3", status:"inProgress"},
@@ -45,13 +45,13 @@ export default class FileStatusPanel extends Component {
               {id:7, sourceType:'usb', progress: 100, name:"AUD - Tres Notas.mp3", status:"completed"}],
       metterIndexSelected: -1
     };
-*/
-    let files =[];
-    for(let i=0; i<100; i++)
-    {
-      files.push({id:i, progress: 50, name:"AUD - Solo por tu amor.mp3", status:"inProgress"});
-    } 
-    this.state = {files:files,metterIndexSelected: -1};
+
+    // let files =[];
+    // for(let i=0; i<100; i++)
+    // {
+    //   files.push({id:i, progress: 50, name:"AUD - Solo por tu amor.mp3", status:"inProgress"});
+    // } 
+    // this.state = {files:files,metterIndexSelected: -1};
 
     this.series = [
       {label:'Completed', value:0, colorIndex:'ok'},

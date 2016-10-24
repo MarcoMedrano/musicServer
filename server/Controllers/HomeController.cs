@@ -20,9 +20,9 @@ namespace musicServer.Controllers
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult FileStatus()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "File Status - MusicServer";
 
             return View();
         }

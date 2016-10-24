@@ -15,7 +15,7 @@ import Button from 'grommet/components/Button';
 import CloseIcon from 'grommet/components/icons/base/Close';
 import CloudIcon from 'grommet/components/icons/base/Cloud';
 
-class MainSidebar extends Component {
+class MainMenu extends Component {
 
   constructor() {
     super();
@@ -29,6 +29,9 @@ class MainSidebar extends Component {
   }
 
   render() {
+    let baseAddress =  location.origin && location.origin != 'null' ? location.origin : location.href.substr(0, location.href.lastIndexOf('/'));
+    let nowPLayingUrl = location.origin && location.origin != 'null' ? baseAddress : baseAddress + "/Index.html" ;
+    let fileStatusUrl = location.origin && location.origin != 'null' ?  baseAddress + "/home/FileStatus" : baseAddress + "/FileStatus.html";
     // Change to SideBar when fixed bug of sizes and scroll
     //<Box colorIndex='brand' full='vertical' size={{height:'auto', width:'large'}}>
     return (
@@ -41,19 +44,17 @@ class MainSidebar extends Component {
           
         </Header>
         <Menu primary={true}>
-          <Anchor label='Now Playing' href='home/NowPlaying'/>
-          <Anchor label='Files' href='home/Files' />
-          <Anchor label='File Status' href='home/Files Status'  primary={true} />
-          <Anchor label='About' href='home/About' />
+          <Anchor label='Now Playing' href={nowPLayingUrl} primary={location.href.indexOf('FileStatus') == -1}/>
+          <Anchor label='File Status' href={fileStatusUrl} primary={location.href.indexOf('FileStatus') != -1}/>
         </Menu>
       </Sidebar>
     );
   }
 }
 
-MainSidebar.propTypes = {
+MainMenu.propTypes = {
   onClose: PropTypes.func,
   path: PropTypes.string
 };
 
-module.exports = MainSidebar;
+module.exports = MainMenu;

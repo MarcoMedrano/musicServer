@@ -14,7 +14,7 @@ import Section from 'grommet/components/Section';
 
 import CloseIcon from 'grommet/components/icons/base/Close';
 
-import MainSidebar from './components/MainSidebar';
+import MainMenu from './components/MainMenu';
 import FileStatusPanel from './components/FileStatusPanel';
 
 
@@ -35,7 +35,7 @@ class MainApp extends Component {
   }
 
   render() {
-    let mainMenu = this.state.mainMenuVisible ? <MainSidebar onLogoIconClick = {this._onLogoIconClicked}/> : null;
+    let mainMenu = this.state.mainMenuVisible ? <MainMenu onLogoIconClick = {this._onLogoIconClicked}/> : null;
 
     //TODO: right as priority is not working, check later
     return (
