@@ -104,22 +104,6 @@ export default class NowPlayingPanel extends Component {
     }, this);
   }
 
-  renderPlayingOrder() {
-    console.log('rendering playing order');
-    let options = ["As arrives", "By Genere", "By Artist"];
-    let artists = ["Paulina Rubio", "Thalia", "AU-D", "Maluma", "Vico-C", "La Oreja de Vangoc", "April Lavige", "Adele", "Maroon 5", "Bruno Mars", "Mecano", "Ov7", "Efecto Mandarina", "Sin Banderas"];
-
-    return <Box direction='row' justify='center'>
-            <Label>Play:</Label>
-            <Box pad='small'>
-              <Select id="select1" value={options[0]} defaultValue={options[0]} options={options} />
-            </Box>
-            <Box pad='small'>
-              <Select id="select2" multiple={true} value={artists[0]} options={artists}  onSearch={()=>{}} />
-            </Box>
-    </Box>  
-  }
-
   render () {
     return (
       <Box full={true}>
