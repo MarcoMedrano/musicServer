@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Section from 'grommet/components/Section';
 import Search from 'grommet/components/Search';
 import Box from 'grommet/components/Box';
 import Button from 'grommet/components/Button';
@@ -7,12 +8,10 @@ import Header from 'grommet/components/Header';
 import Heading from 'grommet/components/Heading';
 import Title from 'grommet/components/Title';
 import Meter from 'grommet/components/Meter';
-import Section from 'grommet/components/Section';
 import List from 'grommet/components/List';
 import ListItem from 'grommet/components/ListItem';
 import Value from 'grommet/components/Value';
 import Footer from 'grommet/components/Footer';
-import Select from 'grommet/components/Select';
 import Label from 'grommet/components/Label';
 
 import Status from 'grommet/components/icons/Status';
@@ -24,6 +23,8 @@ import NextIcon from 'grommet/components/icons/base/ChapterNext';
 import PreviousIcon from 'grommet/components/icons/base/ChapterPrevious';
 
 import FileListItem from './FileListItem';
+import PlayerComponent from './PlayerComponent';
+import PlayAsComponent from './PlayAsComponent';
 
 export default class NowPlayingPanel extends Component {
 
@@ -33,7 +34,6 @@ export default class NowPlayingPanel extends Component {
     this._onRequestForAdd = this._onRequestForAdd.bind(this);
     this._onRequestForDelete = this._onRequestForDelete.bind(this);
     this._onFileUpload = this._onFileUpload.bind(this);
-    this._onPlayPause = this._onPlayPause.bind(this);
     // this.state = {
     //   files: [],
     //   metterIndexSelected: -1
@@ -70,12 +70,7 @@ export default class NowPlayingPanel extends Component {
 
   }
 
-  _onPlayPause() {
-    this.setState({files: this.state.files, metterIndexSelected: this.state.metterIndexSelected, playing: !this.state.playing});
-    
-  }
-
-  _onFileUpload (e){
+   _onFileUpload (e){
     console.log("_onFileUpload " + e.target.files.length);
     let filesToAdd = [];
 
@@ -117,43 +112,12 @@ export default class NowPlayingPanel extends Component {
     return <Box direction='row' justify='center'>
             <Label>Play:</Label>
             <Box pad='small'>
-              <Select id="item1" value={options[0]} defaultValue={options[0]} options={options} />
+              <Select id="select1" value={options[0]} defaultValue={options[0]} options={options} />
             </Box>
             <Box pad='small'>
-              <Select id="item2" multiple={true} value={artists[0]} options={artists}  onSearch={()=>{}} />
+              <Select id="select2" multiple={true} value={artists[0]} options={artists}  onSearch={()=>{}} />
             </Box>
     </Box>  
-
-  }
-
-  renderCurrentSong(){
-    console.log('rendering current song');
-    
-    let mainIcon = this.state.playing ? <PauseIcon/> : <Pulse icon={<PlayIcon/>}/>;
-    let currentSong = this.state.playing ?
-    <Box direction='row' pad={{between:'small'}}>
-                      <marquee scrolldelay={3000}>♫</marquee>
-                      <marquee scrolldelay={1000} direction='right'>
-                        <Heading tag='h3'>♫ ♫ Current Song 123 ♪ ♪</Heading>
-                      </marquee> 
-                      <marquee scrolldelay={3000} direction='right'>♪</marquee> 
-    </Box> 
-                        :
-                      <Heading tag='h3'>♫   Current Song  ♪</Heading>;
-
-    return <Box align="center" direction='column'>
-              {currentSong}
-              <Box direction='row' align='center' pad={{between:'small'}}>
-                <Value value='0:00' size='xsmall' />
-                <Meter value={50} size='medium'/>
-                <Value value='3:45' size='xsmall'/>
-              </Box>
-              <Box direction='row' pad={{between:'large'}}>
-                <Button icon={<PreviousIcon/>} onClick={this._onPlayPause}/>
-                <Button icon={mainIcon} onClick={this._onPlayPause}/>
-                <Button icon={<NextIcon/>} onClick={this._onPlayPause}/>
-              </Box>
-          </Box>
   }
 
   render () {
@@ -165,10 +129,10 @@ export default class NowPlayingPanel extends Component {
           <Search inline={false} fill={false} dropAlign={{"right": "right"}} size="small" placeHolder="Buscar" />
         </Header>
         <Box direction='column'>
-          {this.renderCurrentSong()}
-          {this.renderPlayingOrder()}
+          <PlayerComponent />
+          <PlayAsComponent />
           <Box  align="center">
-            <List>
+            <List selectable={true}>
               {this.renderFileListItems()}
             </List>
           </Box>
