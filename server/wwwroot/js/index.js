@@ -16,6 +16,7 @@ import CloseIcon from 'grommet/components/icons/base/Close';
 
 import MainMenu from './components/MainMenu';
 import FileStatusPanel from './components/FileStatusPanel';
+import NowPlayingPanel from './components/NowPlayingPanel';
 
 
 class MainApp extends Component {
@@ -42,7 +43,7 @@ class MainApp extends Component {
       <App centered={false}>
         <Split flex='right' priority='left' separator={true} fixed={true}>
           {mainMenu}
-          <FileStatusPanel onLogoIconClick = {this._onLogoIconClicked}/>
+          <NowPlayingPanel onLogoIconClick = {this._onLogoIconClicked}/>
         </Split>
       </App>
     );
