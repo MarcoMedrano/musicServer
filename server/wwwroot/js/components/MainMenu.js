@@ -38,7 +38,7 @@ class MainMenu extends Component {
       <Sidebar fixed={true}>
         <Header justify="between" pad={{horizontal:'small'}} colorIndex='brand'>
           <Button plain={true} icon={<CloudIcon size='large' type='logo' />} onClick={this._onClose} />
-          <Title onClick={this._onClose} a11yTitle='Close Menu'> Menu </Title>
+          <Title onClick={this._onClose} a11yTitle='Close Menu'> Menu-- </Title>
           
             <Button plain={true} a11yTitle='Close Menu' onClick={this._onClose} icon={<CloseIcon />} />
           

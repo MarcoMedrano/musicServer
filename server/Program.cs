@@ -22,7 +22,7 @@ namespace musicServer
                 .UseUrls("http://*:5000/")
                 .UseKestrel()
                 .UseContentRoot(Path.Combine(Directory.GetCurrentDirectory(), "server"))
-                //.UseIISIntegration()
+                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
 
